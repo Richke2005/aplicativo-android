@@ -1,4 +1,4 @@
-package com.example.orgs.ui.activity
+package com.example.app.ui.activity
 
 import android.os.Bundle
 import android.widget.Button
@@ -7,9 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.orgs.R
-import com.example.orgs.dao.ProdutosDao
-import com.example.orgs.model.Produto
+import com.example.app.R
+import com.example.app.dao.ProdutosDao
+import com.example.app.model.Produto
 import java.math.BigDecimal
 
 

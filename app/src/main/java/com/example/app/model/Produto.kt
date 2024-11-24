@@ -1,4 +1,4 @@
-package com.example.orgs.model
+package com.example.app.model
 
 import java.math.BigDecimal
 

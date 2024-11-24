@@ -1,6 +1,6 @@
-package com.example.orgs.dao
+package com.example.app.dao
 
-import com.example.orgs.model.Produto
+import com.example.app.model.Produto
 
 class ProdutosDao {
     fun add(produto: Produto){

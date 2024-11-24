@@ -1,13 +1,13 @@
-package com.example.orgs.ui.recyclerview.adapter
+package com.example.app.ui.recyclerview.adapter
 
-import com.example.orgs.model.Produto
+import com.example.app.model.Produto
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.orgs.R
+import com.example.app.R
 
 class ListaProdutosAdapter(
     private val context: Context,
