@@ -1,15 +1,15 @@
 package com.example.orgs.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.orgs.model.Produto
 import com.example.orgs.R
+import com.example.orgs.dao.ProdutosDao
+import com.example.orgs.model.Produto
 import java.math.BigDecimal
 
 
@@ -24,28 +24,38 @@ class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario
             insets
         }
 
-        val botaoSalvar = findViewById<Button>(R.id.botao_salvar)
+        configuraBotaoSalvar()
+
+    }
+
+    private fun configuraBotaoSalvar() {
+        val botaoSalvar = findViewById<Button>(R.id.activity_formulario_produto_botao_salvar)
+        val dao = ProdutosDao()
         botaoSalvar.setOnClickListener {
-            val campoNome = findViewById<EditText>(R.id.nome)
-            val campoDesc = findViewById<EditText>(R.id.descricao)
-            val campoValor = findViewById<EditText>(R.id.valor)
-            val nome: String = campoNome.text.toString()
-            val desc: String = campoDesc.text.toString()
-            val valorEmTexto: String = campoValor.text.toString()
-
-            val valor = if(valorEmTexto.isBlank()){
-                BigDecimal.ZERO
-            }else{
-                BigDecimal(valorEmTexto)
-            }
-
-            val produtoNovo: Produto = Produto(
-                nome = nome,
-                descricao = desc,
-                valor = valor
-            )
-
-            Log.i("FormularioProduto", "oncreate $produtoNovo")
+            val produtoNovo: Produto = criaProduto()
+            dao.add(produtoNovo)
+            finish()
         }
+    }
+
+    private fun criaProduto(): Produto {
+        val campoNome = findViewById<EditText>(R.id.activity_formulario_produto_nome)
+        val campoDesc = findViewById<EditText>(R.id.activity_formulario_produto_descricao)
+        val campoValor = findViewById<EditText>(R.id.activity_formulario_produto_valor)
+        val nome: String = campoNome.text.toString()
+        val desc: String = campoDesc.text.toString()
+        val valorEmTexto: String = campoValor.text.toString()
+
+        val valor = if (valorEmTexto.isBlank()) {
+            BigDecimal.ZERO
+        } else {
+            BigDecimal(valorEmTexto)
+        }
+
+        return Produto(
+            nome = nome,
+            descricao = desc,
+            valor = valor
+        )
     }
 }

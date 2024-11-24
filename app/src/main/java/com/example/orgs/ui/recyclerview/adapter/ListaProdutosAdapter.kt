@@ -11,17 +11,19 @@ import com.example.orgs.R
 
 class ListaProdutosAdapter(
     private val context: Context,
-    private val produtos: List<Produto>
+    produtos: List<Produto>
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
+
+    private val dataSet = produtos.toMutableList()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun vincula(produto: Produto) {
-            val nome = itemView.findViewById<TextView>(R.id.nome)
+            val nome = itemView.findViewById<TextView>(R.id.activity_formulario_produto_nome)
             nome.text = produto.nome
-            val descricao = itemView.findViewById<TextView>(R.id.descricao)
+            val descricao = itemView.findViewById<TextView>(R.id.activity_formulario_produto_descricao)
             descricao.text = produto.descricao
-            val valor = itemView.findViewById<TextView>(R.id.valor)
+            val valor = itemView.findViewById<TextView>(R.id.activity_formulario_produto_valor)
             valor.text = produto.valor.toPlainString()
         }
 
@@ -33,11 +35,17 @@ class ListaProdutosAdapter(
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = produtos.size
+    override fun getItemCount(): Int = dataSet.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val produto = produtos[position]
+        val produto = dataSet[position]
         holder.vincula(produto)
+    }
+
+    fun update(produtos: List<Produto>) {
+        this.dataSet.clear()
+        this.dataSet.addAll(produtos)
+        notifyDataSetChanged()
     }
 
 }
