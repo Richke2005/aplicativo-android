@@ -8,12 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.app.R
-import com.example.app.dao.ProdutosDao
-import com.example.app.model.Produto
-import java.math.BigDecimal
+import com.example.app.dao.TasksDao
+import com.example.app.model.Task
 
 
-class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario_produto) {
+class FormularioTaskActivity : AppCompatActivity(R.layout.activity_formulario_task) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -29,33 +28,33 @@ class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario
     }
 
     private fun configuraBotaoSalvar() {
-        val botaoSalvar = findViewById<Button>(R.id.activity_formulario_produto_botao_salvar)
-        val dao = ProdutosDao()
+        val botaoSalvar = findViewById<Button>(R.id.activity_formulario_task_botao_salvar)
+        val dao = TasksDao()
         botaoSalvar.setOnClickListener {
-            val produtoNovo: Produto = criaProduto()
-            dao.add(produtoNovo)
+            val newTask: Task = createTask()
+            dao.add(newTask)
             finish()
         }
     }
 
-    private fun criaProduto(): Produto {
-        val campoNome = findViewById<EditText>(R.id.activity_formulario_produto_nome)
-        val campoDesc = findViewById<EditText>(R.id.activity_formulario_produto_descricao)
-        val campoValor = findViewById<EditText>(R.id.activity_formulario_produto_valor)
+    private fun createTask(): Task {
+        val campoNome = findViewById<EditText>(R.id.activity_formulario_task_nome)
+        val campoDesc = findViewById<EditText>(R.id.activity_formulario_task_descricao)
+        val campoValor = findViewById<EditText>(R.id.activity_formulario_task_prazo)
         val nome: String = campoNome.text.toString()
         val desc: String = campoDesc.text.toString()
-        val valorEmTexto: String = campoValor.text.toString()
+        val prazoEmTexto: String = campoValor.text.toString()
 
-        val valor = if (valorEmTexto.isBlank()) {
-            BigDecimal.ZERO
-        } else {
-            BigDecimal(valorEmTexto)
+        val prazo: Int = if(prazoEmTexto.isBlank()) {
+             0
+        }else{
+            prazoEmTexto.toInt()
         }
 
-        return Produto(
+        return Task(
             nome = nome,
             descricao = desc,
-            valor = valor
+            prazo = prazo
         )
     }
 }

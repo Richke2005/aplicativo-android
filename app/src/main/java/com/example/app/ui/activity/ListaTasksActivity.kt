@@ -6,14 +6,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app.R
-import com.example.app.dao.ProdutosDao
-import com.example.app.ui.recyclerview.adapter.ListaProdutosAdapter
+import com.example.app.dao.TasksDao
+import com.example.app.ui.recyclerview.adapter.ListaTasksAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos) {
-    private val dao = ProdutosDao()
-    private val adapter = ListaProdutosAdapter(context = this, produtos = dao.searchAll())
+class ListaTasksActivity : AppCompatActivity(R.layout.activity_lista_tasks) {
+    private val dao = TasksDao()
+    private val adapter = ListaTasksAdapter(context = this, tasks = dao.searchAll())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,19 +27,19 @@ class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos
     }
 
     private fun configuraFab() {
-        val fab = findViewById<FloatingActionButton>(R.id.activity_lista_produtos_fab)
+        val fab = findViewById<FloatingActionButton>(R.id.activity_lista_tasks_fab)
         fab.setOnClickListener {
             vaiParaFormProduto()
         }
     }
 
     private fun vaiParaFormProduto() {
-        val intent = Intent(this, FormularioProdutoActivity::class.java)
+        val intent = Intent(this, FormularioTaskActivity::class.java)
         startActivity(intent)
     }
 
     private fun configuraReciclerView(): Unit {
-        val reciclerView = findViewById<RecyclerView>(R.id.activity_lista_produtos_reciclerView)
+        val reciclerView = findViewById<RecyclerView>(R.id.activity_lista_tasks_reciclerView)
         reciclerView.adapter = adapter
     }
 }

@@ -1,9 +1,7 @@
 package com.example.app.model
 
-import java.math.BigDecimal
-
-data class Produto (
+data class Task (
     val nome: String,
     val descricao: String,
-    val valor: BigDecimal
+    val prazo: Int
 )

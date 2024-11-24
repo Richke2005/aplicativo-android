@@ -14,9 +14,9 @@
         android:theme="@style/Theme.Orgs"
         tools:targetApi="31">
 
-        <activity android:name="com.example.app.ui.activity.FormularioProdutoActivity"/>
+        <activity android:name="com.example.app.ui.activity.FormularioTaskActivity"/>
         <activity
-            android:name="com.example.app.ui.activity.ListaProdutosActivity"
+            android:name="com.example.app.ui.activity.ListaTasksActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
