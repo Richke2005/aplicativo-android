@@ -12,12 +12,6 @@ class TasksDao {
     }
 
     companion object {
-        private val tasks = mutableListOf<Task>(
-            Task(
-                "Kotlin",
-                "fazer lição kotlin",
-                2
-            )
-        )
+        private val tasks = mutableListOf<Task>()
     }
 }
