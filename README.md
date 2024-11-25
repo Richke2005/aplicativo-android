@@ -33,7 +33,8 @@ This Android application provides a simple and intuitive way to manage your task
 ## Usage
 
 1. **Creating a Task:**
-   - Tap the "+" button to open the task creation form.- Enter the task name, description, and due date.
+   - Tap the "+" button to open the task creation form.
+   - Enter the task name, description, and due date.
    - Tap "Save" to create the task.
 
 2. **Viewing Tasks:**
