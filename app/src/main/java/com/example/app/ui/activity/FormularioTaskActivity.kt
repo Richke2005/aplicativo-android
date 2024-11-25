@@ -1,34 +1,52 @@
 package com.example.app.ui.activity
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import coil3.load
+import coil3.request.placeholder
 import com.example.app.R
 import com.example.app.dao.TasksDao
+import com.example.app.databinding.ActivityFormularioTaskBinding
+import com.example.app.databinding.FormularioImagemBinding
+import com.example.app.extensions.tentaCarregarImagem
 import com.example.app.model.Task
+import com.example.app.ui.dialog.FormularioImagemDialog
 
 
-class FormularioTaskActivity : AppCompatActivity(R.layout.activity_formulario_task) {
+class FormularioTaskActivity : AppCompatActivity() {
+    private val binding by lazy {
+        ActivityFormularioTaskBinding.inflate(layoutInflater)
+    }
+    private var url : String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        title = "Cadastrar Tarefa"
 
         configuraBotaoSalvar()
+        binding.activityFormularioTaskImagem.setOnClickListener{
+            FormularioImagemDialog(this).mostra(url){ imagem ->
+                url = imagem
+                binding.activityFormularioTaskImagem.tentaCarregarImagem(url)
+            }
+        }
 
     }
 
     private fun configuraBotaoSalvar() {
-        val botaoSalvar = findViewById<Button>(R.id.activity_formulario_task_botao_salvar)
+        val botaoSalvar = binding.activityFormularioTaskBotaoSalvar
         val dao = TasksDao()
         botaoSalvar.setOnClickListener {
             val newTask: Task = createTask()
@@ -38,9 +56,10 @@ class FormularioTaskActivity : AppCompatActivity(R.layout.activity_formulario_ta
     }
 
     private fun createTask(): Task {
-        val campoNome = findViewById<EditText>(R.id.activity_formulario_task_nome)
-        val campoDesc = findViewById<EditText>(R.id.activity_formulario_task_descricao)
-        val campoValor = findViewById<EditText>(R.id.activity_formulario_task_prazo)
+        val campoNome = binding.activityFormularioTaskNome
+        val campoDesc = binding.activityFormularioTaskDescricao
+        val campoValor = binding.activityFormularioTaskPrazo
+
         val nome: String = campoNome.text.toString()
         val desc: String = campoDesc.text.toString()
         val prazoEmTexto: String = campoValor.text.toString()
@@ -54,7 +73,8 @@ class FormularioTaskActivity : AppCompatActivity(R.layout.activity_formulario_ta
         return Task(
             nome = nome,
             descricao = desc,
-            prazo = prazo
+            prazo = prazo,
+            imagem = url
         )
     }
 }

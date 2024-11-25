@@ -3,20 +3,24 @@ package com.example.app.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.example.app.R
 import com.example.app.dao.TasksDao
+import com.example.app.databinding.ActivityListaTasksBinding
 import com.example.app.ui.recyclerview.adapter.ListaTasksAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-class ListaTasksActivity : AppCompatActivity(R.layout.activity_lista_tasks) {
+class ListaTasksActivity : AppCompatActivity() {
     private val dao = TasksDao()
     private val adapter = ListaTasksAdapter(context = this, tasks = dao.searchAll())
+    private val binding by lazy {
+        ActivityListaTasksBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(binding.root)
         configuraReciclerView()
         configuraFab()
     }
@@ -27,19 +31,19 @@ class ListaTasksActivity : AppCompatActivity(R.layout.activity_lista_tasks) {
     }
 
     private fun configuraFab() {
-        val fab = findViewById<FloatingActionButton>(R.id.activity_lista_tasks_fab)
+        val fab = binding.activityListaTasksFab
         fab.setOnClickListener {
-            vaiParaFormProduto()
+            vaiParaFormTask()
         }
     }
 
-    private fun vaiParaFormProduto() {
+    private fun vaiParaFormTask() {
         val intent = Intent(this, FormularioTaskActivity::class.java)
         startActivity(intent)
     }
 
     private fun configuraReciclerView(): Unit {
-        val reciclerView = findViewById<RecyclerView>(R.id.activity_lista_tasks_reciclerView)
+        val reciclerView = binding.activityListaTasksReciclerView
         reciclerView.adapter = adapter
     }
 }

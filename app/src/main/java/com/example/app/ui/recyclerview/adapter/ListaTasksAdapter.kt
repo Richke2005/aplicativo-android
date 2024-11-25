@@ -4,9 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil3.load
+import coil3.request.error
+import coil3.request.fallback
+import coil3.request.placeholder
 import com.example.app.R
+import com.example.app.databinding.TaskItemBinding
+import com.example.app.extensions.tentaCarregarImagem
 import com.example.app.model.Task
 
 class ListaTasksAdapter(
@@ -16,23 +21,37 @@ class ListaTasksAdapter(
 
     private val dataSet = tasks.toMutableList()
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(private val binding: TaskItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun vincula(task: Task) {
-            val nome = itemView.findViewById<TextView>(R.id.task_item_nome)
+            val nome = binding.taskItemNome
             nome.text = task.nome
-            val descricao = itemView.findViewById<TextView>(R.id.task_item_descricao)
+            val descricao = binding.taskItemDescricao
             descricao.text = task.descricao
-            val valor = itemView.findViewById<TextView>(R.id.task_item_prazo)
-            valor.text = "${task.prazo} dias"
+            val prazo = binding.taskItemPrazo
+            prazo.text = "${task.prazo} Dias"
+
+            val visibilidade = if(task.imagem != null){
+                View.VISIBLE
+            }else{
+                View.GONE
+            }
+
+            binding.taskItemImageView.visibility = visibilidade
+            binding.taskItemImageView.tentaCarregarImagem(task.imagem)
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.task_item, parent, false)
-        return ViewHolder(view)
+        val binding = TaskItemBinding.inflate(
+            LayoutInflater.from(context),
+            parent,
+            false
+        )
+
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int = dataSet.size
